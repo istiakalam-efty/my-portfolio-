@@ -1,11 +1,15 @@
 /* ---------------------------- 1. CSS VARIABLES --------------------------- */
 :root {
     /* Background */
-    --bg: #eef0f0;
+    --bg: #f7ede1;
     --bg-soft: #ffffff;
     --surface: #ffffff;
     --surface-strong: #ffffff;
     --border: rgba(51, 54, 58, 0.10);
+
+    /* Overlay (dark glass badges on hero photo) */
+    --overlay-glass: rgba(24, 20, 16, 0.55);
+    --overlay-border: rgba(255, 255, 255, 0.14);
 
     /* Primary Colors */
     --accent-primary: #c9692f;
@@ -13,9 +17,15 @@
     --accent-light: #f0c8a0;
     --accent-dark: #a04f21;
 
+    /* Ink (near-black used for active nav pill & primary buttons) */
+    --ink: #16151a;
+
     /* Gradients */
     --gradient-main: linear-gradient(135deg, #c9692f, #e2905a);
     --gradient-wide: linear-gradient(120deg, #a04f21, #c9692f, #e2905a);
+    --gradient-page: radial-gradient(ellipse 900px 560px at 50% -8%, rgba(226, 144, 90, 0.22), transparent 60%),
+        radial-gradient(ellipse 800px 600px at 105% 15%, rgba(201, 105, 47, 0.12), transparent 60%),
+        linear-gradient(180deg, #fbf3e9, #f7ede1 45%, #f3e6d6);
 
     /* Text */
     --text-primary: #33363a;
@@ -25,6 +35,7 @@
     /* Fonts */
     --font-display: "Sora", "Space Grotesk", sans-serif;
     --font-body: "Space Grotesk", sans-serif;
+    --font-accent: "Playfair Display", Georgia, "Times New Roman", serif;
 
     /* Border Radius */
     --radius-sm: 10px;
@@ -70,7 +81,8 @@ html {
 }
 
 body {
-    background: var(--bg);
+    background: var(--gradient-page);
+    background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.65;
@@ -361,44 +373,44 @@ h4 {
 /* ------------------------------ 7. NAVBAR --------------------------------- */
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 18px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
     z-index: 1000;
-    height: var(--nav-height);
+    width: max-content;
+    height: auto;
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    transition: background var(--transition-fast), box-shadow var(--transition-fast), height var(--transition-fast);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: var(--shadow-soft);
+    padding: 6px;
+    transition: background var(--transition-fast), box-shadow var(--transition-fast), top var(--transition-fast);
 }
 
 .navbar.scrolled {
-    height: 64px;
+    top: 12px;
     background: rgba(255, 255, 255, 0.97);
-    box-shadow: 0 4px 24px rgba(30, 40, 100, 0.08);
-    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
 }
 
 .nav-container {
-    width: 100%;
-    max-width: 1280px;
-    margin-inline: auto;
-    padding-inline: 24px;
+    width: auto;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    justify-content: center;
+    gap: 4px;
 }
 
 .logo {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
+    display: none;
 }
 
 .logo-accent {
@@ -419,7 +431,7 @@ h4 {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 4px;
 }
 
 .nav-link {
@@ -427,43 +439,31 @@ h4 {
     font-weight: 500;
     color: var(--text-secondary);
     position: relative;
-    padding: 6px 0;
-    transition: color var(--transition-fast);
+    padding: 12px 22px;
+    border-radius: 999px;
+    transition: color var(--transition-fast), background var(--transition-fast);
 }
 
 .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0%;
-    height: 2px;
-    background: var(--gradient-main);
-    transition: width var(--transition-fast);
-    border-radius: 2px;
+    display: none;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover {
     color: var(--text-primary);
+    background: rgba(22, 21, 26, 0.05);
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
+.nav-link.active {
+    color: #fff;
+    background: var(--ink);
+}
+
+.nav-link.active:hover {
+    background: var(--ink);
 }
 
 .btn-nav {
-    display: inline-flex;
-    background: var(--accent-primary);
-    color: #fff;
-    padding: 10px 22px;
-    box-shadow: 0 6px 18px rgba(201, 105, 47, 0.3);
-}
-
-.btn-nav:hover {
-    background: var(--accent-dark);
-    transform: translateY(-2px);
+    display: none;
 }
 
 .hamburger {
@@ -551,26 +551,26 @@ h4 {
 }
 
 .btn-primary {
-    background: var(--accent-primary);
+    background: var(--ink);
     color: #fff;
-    box-shadow: 0 8px 24px rgba(201, 105, 47, 0.35);
+    box-shadow: 0 10px 26px rgba(22, 21, 26, 0.25);
 }
 
 .btn-primary:hover {
-    background: var(--accent-dark);
-    box-shadow: 0 10px 32px rgba(201, 105, 47, 0.45);
+    background: #000;
+    box-shadow: 0 12px 30px rgba(22, 21, 26, 0.32);
     transform: translateY(-2px);
 }
 
 .btn-outline {
     border: 1px solid var(--border);
     color: var(--text-primary);
-    background: #ffffff;
+    background: #fbf3e9;
 }
 
 .btn-outline:hover {
     border-color: var(--accent-primary);
-    background: rgba(201, 105, 47, 0.06);
+    background: #ffffff;
     transform: translateY(-2px);
 }
 
@@ -628,10 +628,27 @@ h4 {
 }
 
 .eyebrow {
-    color: var(--accent-secondary);
-    font-weight: 600;
-    margin-bottom: 18px;
-    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 26px;
+    font-size: 0.85rem;
+    padding: 10px 18px 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-soft);
+}
+
+.eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    flex-shrink: 0;
 }
 
 .hero-name {
@@ -642,8 +659,9 @@ h4 {
 
 .hero-role {
     font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-    color: var(--text-secondary);
-    font-family: var(--font-body);
+    color: var(--accent-primary);
+    font-family: var(--font-accent);
+    font-style: italic;
     font-weight: 500;
     margin-bottom: 22px;
     min-height: 2.4em;
@@ -705,152 +723,160 @@ h4 {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 420px;
+    height: auto;
+    padding: 40px;
 }
 
-.profile-frame {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    overflow: hidden;
-    background: var(--accent-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 70px rgba(201, 105, 47, 0.35);
-    animation: floatY 5s ease-in-out infinite;
-}
-
-.profile-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-}
-
-
-.profile-placeholder {
-    width: 92%;
-    height: 92%;
-    border-radius: 50%;
-    background: var(--bg-soft);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-size: 5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    border: 2px solid var(--border);
-}
-
+/* Orbit rings are no longer part of this layout */
 .orbit-ring {
-    position: absolute;
-    border: 1px dashed rgba(201, 105, 47, 0.18);
-    border-radius: 50%;
-    animation: spin 30s linear infinite;
-}
-
-.ring-1 {
-    width: 340px;
-    height: 340px;
-}
-
-.ring-2 {
-    width: 400px;
-    height: 400px;
-    animation-duration: 45s;
-    animation-direction: reverse;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    display: none;
 }
 
 .badge-chip {
     position: absolute;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 
-    padding: 14px 22px;
-    border-radius: 999px;
+    padding: 12px 18px;
+    border-radius: 18px;
 
     font-size: 0.92rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: #000000;
+    font-style: bold;
 
-    background: #ffffff;
-    border: 1px solid var(--border);
+    background: var(--overlay-glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--overlay-border);
 
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 16px 34px rgba(17, 14, 10, 0.28);
 
     white-space: nowrap;
-    animation: floatY 4s ease-in-out infinite;
+    animation: none;
+    z-index: 2;
 }
 
-.badge-chip.chip-1 {
-    top: 10%;
-    left: -10%;
+.badge-chip .chip-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212, 226, 90, 0.9);
+    color: var(--ink);
 }
 
-.badge-chip.chip-2 {
-
-    right: -12%;
+.badge-chip .chip-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 100;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.65);
+    margin-bottom: 2px;
 }
 
-
-
+.badge-chip .chip-title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #171616;
+}
 
 .profile-wrapper {
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 1 / 1;
 }
 
 .profile-frame {
     width: 100%;
     height: 100%;
-    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    background: var(--accent-primary);
+
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    box-shadow: 0 20px 60px rgba(201, 105, 47, 0.35);
-    /* only clips the image */
+
     position: relative;
+    box-shadow: var(--shadow-card);
+}
+
+.profile-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 700;
+    color: #fff;
+    border: none;
 }
 
 .profile-frame img {
-    width: 86%;
-    height: 94%;
-    border-radius: 58% 42% 50% 50% / 46% 42% 58% 54%;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-lg);
     object-fit: cover;
     object-position: center top;
 }
 
-/* Frontend */
+/* Education */
 .chip-1 {
-    top: 18%;
-    left: -28%;
-    animation-delay: -1s;
+    top: 6%;
+    left: -8%;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
-/* CSE Student */
+/* Focus */
 .chip-2 {
-    top: 62%;
-    right: -34%;
-    animation-delay: -2s;
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    transform: translateY(-50%);
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
-/* Problem Solver */
+/* Sectors */
 .chip-3 {
     bottom: 6%;
-    left: -12%;
-    animation-delay: -3s;
+    left: -6%;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .scroll-cue {
@@ -1505,13 +1531,11 @@ h4 {
     }
 
     .hero-visual {
-        height: 380px;
         margin-top: 20px;
     }
 
     .profile-wrapper {
-        width: clamp(280px, 46vw, 400px);
-        height: clamp(280px, 46vw, 400px);
+        max-width: clamp(280px, 46vw, 420px);
     }
 
     .about-grid,
@@ -1575,26 +1599,21 @@ h4 {
         margin-bottom: 40px;
     }
 
-    .hero-visual {
-        height: 320px;
-    }
-
     .profile-wrapper {
-        width: clamp(240px, 55vw, 340px);
-        height: clamp(240px, 55vw, 340px);
+        max-width: clamp(240px, 55vw, 360px);
     }
 
     /* Pull badge chips inward so they don't overflow the viewport */
     .chip-1 {
-        left: -6%;
+        left: -4%;
     }
 
     .chip-2 {
-        right: -6%;
+        right: -4%;
     }
 
     .chip-3 {
-        left: 0;
+        left: -2%;
     }
 
     .about-stats {
@@ -1674,18 +1693,23 @@ h4 {
     }
 
     .hero-visual {
-        height: 280px;
+        padding: 20px;
     }
 
     .profile-wrapper {
-        width: clamp(210px, 62vw, 300px);
-        height: clamp(210px, 62vw, 300px);
+        max-width: clamp(220px, 68vw, 320px);
     }
 
     .badge-chip {
-        font-size: 0.68rem;
-        padding: 6px 12px;
-        gap: 6px;
+        font-size: 0.72rem;
+        padding: 8px 12px;
+        gap: 8px;
+        border-radius: 14px;
+    }
+
+    .badge-chip .chip-icon {
+        width: 32px;
+        height: 32px;
     }
 
     .chip-2,
@@ -1694,18 +1718,8 @@ h4 {
     }
 
     .chip-1 {
-        top: 4%;
-        left: 0;
-    }
-
-    .orbit-ring.ring-1 {
-        width: 270px;
-        height: 270px;
-    }
-
-    .orbit-ring.ring-2 {
-        width: 320px;
-        height: 320px;
+        top: 6%;
+        left: -2%;
     }
 
     .about-stats {
@@ -1799,12 +1813,11 @@ h4 {
     }
 
     .hero-visual {
-        height: 240px;
+        padding: 12px;
     }
 
     .profile-wrapper {
-        width: 190px;
-        height: 190px;
+        max-width: 220px;
     }
 
     .badge-chip {
