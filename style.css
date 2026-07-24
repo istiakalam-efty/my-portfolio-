@@ -12,17 +12,17 @@
     --overlay-border: rgba(255, 255, 255, 0.14);
 
     /* Primary Colors */
-    --accent-primary: #c9692f;
-    --accent-secondary: #0e9f6e;
+    --accent-primary: #0c0c0c;
+    --accent-secondary: #d6911a;
     --accent-light: #f0c8a0;
-    --accent-dark: #a04f21;
+    --accent-dark: #d6911a;
 
     /* Ink (near-black used for active nav pill & primary buttons) */
     --ink: #16151a;
 
     /* Gradients */
-    --gradient-main: linear-gradient(135deg, #c9692f, #e2905a);
-    --gradient-wide: linear-gradient(120deg, #a04f21, #c9692f, #e2905a);
+    --gradient-main: linear-gradient(135deg, #d6911a, #d6911a);
+    --gradient-wide: linear-gradient(120deg, #d6911a, #d6911a, #070707);
     /* Simple flat page background (matches reference screenshot) */
     --gradient-page: #f7ede4;
 
